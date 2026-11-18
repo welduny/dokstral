@@ -17,7 +17,6 @@ class ProcessBookReturnRequest extends FormRequest
         return [
             'keterangan_kondisi' => ['required', Rule::in(['baik', 'rusak_ringan', 'rusak_berat', 'hilang'])],
             'catatan_admin' => ['nullable', 'string', 'max:2000'],
-            'denda_tambahan' => ['nullable', 'integer', 'min:0', 'max:100000000'],
         ];
     }
 }

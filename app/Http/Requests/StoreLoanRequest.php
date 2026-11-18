@@ -8,7 +8,11 @@ class StoreLoanRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->status === 'active';
+        $user = $this->user();
+
+        return $user !== null
+            && $user->status === 'active'
+            && $user->role !== 'admin';
     }
 
     public function rules(): array

@@ -9,11 +9,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('nama')->nullable()->after('name');
-            $table->string('status')->default('active')->after('role');
-        });
-
         Schema::table('books', function (Blueprint $table) {
             $table->string('isbn')->nullable()->unique()->after('penulis');
             $table->string('kategori')->nullable()->after('isbn');
@@ -55,9 +50,6 @@ return new class extends Migration
         Schema::table('books', function (Blueprint $table) {
             $table->dropUnique(['isbn']);
             $table->dropColumn(['isbn', 'kategori', 'jumlah_total', 'stok_tersedia']);
-        });
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['nama', 'status']);
         });
     }
 };

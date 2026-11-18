@@ -18,6 +18,11 @@ class RoleMiddleware
     if (auth()->check() && auth()->user()->role === $role) {
         return $next($request);
     }
+
+    if (auth()->check() && $role === 'admin') {
+        return redirect()->route('admin.login')->with('error', 'Halaman ini hanya untuk admin. Silakan masuk dengan akun administrator.');
+    }
+
     abort(403, 'Anda tidak memiliki akses ke halaman ini.');
 }
 

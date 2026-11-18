@@ -21,6 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'nama',
+        'nis',
+        'kelas',
         'email',
         'password',
         'role',
@@ -53,6 +55,26 @@ class User extends Authenticatable
     public function loans()
     {
         return $this->hasMany(Loan::class);
+    }
+
+    public function bookFavorites()
+    {
+        return $this->hasMany(BookFavorite::class);
+    }
+
+    public function bookReviews()
+    {
+        return $this->hasMany(BookReview::class);
+    }
+
+    public function readingChallenges()
+    {
+        return $this->hasMany(ReadingChallenge::class);
+    }
+
+    public function adminPasswordResetCode()
+    {
+        return $this->hasOne(AdminPasswordResetCode::class);
     }
 
     public function hasUnpaidFine(): bool

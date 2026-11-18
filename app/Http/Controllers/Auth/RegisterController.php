@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -49,6 +50,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'nis' => ['required', 'string', 'max:30', 'regex:/\A[0-9]+\z/', 'unique:users,nis'],
+            'kelas' => ['required', 'string', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,10 +67,24 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'nama' => $data['name'],
+            'nis' => trim($data['nis']),
+            'kelas' => trim($data['kelas']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 'member',
-            'status' => 'active',
+            'role' => 'siswa',
+            'status' => 'pending',
         ]);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with(
+            'success',
+            'Pendaftaran berhasil. Akun kamu menunggu verifikasi admin sebelum bisa digunakan.'
+        );
     }
 }

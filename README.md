@@ -21,6 +21,32 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## Database
+
+The application uses MySQL or MariaDB. Configure `DB_CONNECTION`, `DB_HOST`,
+`DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` in `.env`, then create
+the configured database with the `utf8mb4` character set and run:
+
+```bash
+php artisan migrate
+```
+
+Automated tests use a separate MySQL database named `lehbook_test`, configured
+in `phpunit.xml`; create it before running `php artisan test`.
+
+On the configured XAMPP development machine, the isolated MariaDB instance uses
+port `3307` and keeps its data under `C:\xampp\mysql\data_dokstral`. Start it
+from PowerShell if it is not already running, and register it to start whenever
+your Windows account logs in:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\start-dokstral-mysql.ps1 -InstallStartupTask
+```
+
+The project's local `.env` contains its database credentials and must not be
+committed. The isolated server listens on localhost only and does not change
+XAMPP's existing databases.
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.

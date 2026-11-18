@@ -14,6 +14,6 @@ class UpdateLoanStatusRequest extends FormRequest
 
     public function rules(): array
     {
-        return ['status' => ['required', Rule::in(['pending', 'borrowed', 'returned', 'rejected', 'overdue'])]];
+        return ['status' => ['required', Rule::in(['pending', 'returned', 'rejected', 'overdue'])]];
     }
 }
